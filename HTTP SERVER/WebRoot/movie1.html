@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
 	<meta charset="UTF-8">
 	<title>Blog Site</title>
+
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta http-eqiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="css/doremon.css">
@@ -984,31 +985,34 @@
 							<div><img src="imgs/movie1.jpg" style="width:300px;height:300px"></img></div>
 							<div class="info">AVATAR - The Way Of Water</br>Realese - 2022</div>
 							<h3>Add your comment on this movie</h3><br>
-							<form method="POST" action="movie1.html" onsubmit="returm false">
-								<input name="data" type="text">
-							<br><br><input type="submit" onclick="return false;"><br><br>
+							<form method="POST" action="movie1.html" onsubmit="SubmitPOST(this);return false">
+								<input name="data" type="text" rows="5">
+							<br><br><input type="submit"><br><br>
 							<table id="tbl" border="2">
 								<tbody>
 
 								</tbody>
 							</table>
 								<script>
-									const comments = fetch("results/movie1.json")
-									.then(response => response.json())
-									.then(data=> appendData(data));
-
-
-									function appendData(comments) {
-										console.log(comments);
-										let mainContainer = document.getElementById("tbl");
-										console.log(comments.length);
-										for (let i = 0; i < comments.length; i++) {
-											console.log("aaa");
-											let table = document.getElementById("tbl");
-											table.innerHTML += "<tr>" + "<td>" + comments[i].comments + "</td>" + "</tr>";
-											//mainContainer.appendChild(table);
+									function SubmitPOST(formElement){
+										var fd = new FormData(formElement);
+										CallHTTPHandler(formElement.action, fd);
+									}
+									function CallHTTPHandler(handlerFile,formData){
+										var xmlhttp = new XMLHttpRequest();
+										xmlhttp.withCredentials = true;
+										if (formData === null){
+											xmlhttp.open("GET", handlerFile);
+											xmlhttp.send();
+										}
+										else {
+											xmlhttp.open("POST", handlerFile);
+											xmlhttp.send(formData);
 										}
 									}
+								</script>
+								<script>
+
 								</script>
 
 						</form>

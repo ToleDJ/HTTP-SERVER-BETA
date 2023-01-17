@@ -1,39 +1,29 @@
-var left = 0, down = 0;
+const comments = fetch("results/movie1.json")
+.then(response => response.json())
+.then(data=> appendData(data));
 
-function moveLeftTimeout(){
-  setTimeout(function(){
-    if(left<300){
-      left++
-      document.getElementById("box").style.left = left +"px";
-      if (left % 300 > down + 1) {
-        document.getElementById("box").innerHTML = "Run</br>Away"  
-      } else {
-        document.getElementById("box").innerHTML = "Why</br>Ahhh"
-      }
-      
-      moveLeftTimeout();
-    } else {
-      left = 0, down = 0;
-       document.getElementById("box").style.left = "0px";
-       document.getElementById("box").style.top = "0px";
-       document.getElementById("box").innerHTML = ""
-    }
-  },15);
+
+function appendData(comments) {
+    console.log(comments);
+	let mainContainer = document.getElementById("tbl");
+	console.log(comments.length);
+	//document.write("<table>");
+	for (let i = 0; i < comments.length; i++) {
+    	console.log("aaa");
+		let table = document.getElementById("tbl");
+        /*document.write("<tr>");
+	    document.write("<td>");
+		document.write(comments[i].comments);
+    	document.write("</td>");
+    	document.write("</tr>");
+		/*var row = document.createElement("tr");
+		var cell = document.createElement("td");
+		cell.innerHTML = comments[i].comments
+		row.appendChild(cell);
+		table.appendChild(row);*/
+    	table.innerHTML += "<tr>" + "<td>" + comments[i].comments + "</td>" + "</tr>";
+		//mainContainer.appendChild(table);
+		}
+    //document.write("</table>");
+
 }
-
-function moveDownInterval(){
-  var theTimer = setInterval(function(){
-    if(down<250){
-        down++
-        //console.log(document.getElementById("box").style);
-        document.getElementById("box").style.top = down +"px";
-      }
-    else{ clearInterval(theTimer); }
-  },15);
-  } 
-
-box = document.getElementById("box");
-box.addEventListener("click",  function(){
-  moveLeftTimeout();
-  moveDownInterval();
-})

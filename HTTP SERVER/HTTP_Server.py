@@ -4,7 +4,7 @@ import socket
 import re
 from _thread import *
 import module1
-
+import time
 IP = '0.0.0.0'
 PORT = 8080
 SOCKET_TIMEOUT = 100
@@ -38,8 +38,9 @@ def read_file(file_path):
     """
     file = open(file_path, 'rb')
     file_content = file.read()
-    return file_content
+    print(str(file_content))
     file.close()
+    return file_content
 
 def generate_http_packet_header(filetype, resource):
     file_size = os.path.getsize(DEFAULT_DIR + resource)
@@ -114,10 +115,11 @@ def validate_http_request(request):
 
 def POST_client_request(client_request):
     x = client_request.split("\r\n")
-    data = x[len(x) - 1]
-    send = data.split("=")
-    print(send[1])
-    #module1.DB(send[1])
+    data = x[len(x) - 3]
+    print(data)
+    # send = data.split("=")
+    # print(send[1])
+    module1.DB(data)
 
 
 
@@ -132,7 +134,7 @@ def threaded_handle_client(client_socket):
         except:
             print ('Receive Time Out')
             break
-        print (client_request.split())
+        print(client_request.split())
         valid_http, resource, type = validate_http_request(client_request)
         if valid_http:
             print('Got a valid HTTP request')
