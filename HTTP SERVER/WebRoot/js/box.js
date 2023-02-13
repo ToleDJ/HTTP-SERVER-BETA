@@ -27,3 +27,6 @@ function appendData(comments) {
     //document.write("</table>");
 
 }
+function appendData11(){
+    alert("12345");
+}

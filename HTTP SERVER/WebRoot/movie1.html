@@ -977,7 +977,6 @@
 		<div class="st-container">
 			<div class="st-scroll">
 				<section class="st-panel" id="st-panel-1">
-					<div class="st-deco" data-icon="✦"></div>
 					<h2>Movies Blog</h2>
 					<div class="st-centered">
 						<div class="st-box">
@@ -985,7 +984,9 @@
 							<div><img src="imgs/movie1.jpg" style="width:300px;height:300px"></img></div>
 							<div class="info">AVATAR - The Way Of Water</br>Realese - 2022</div>
 							<h3>Add your comment on this movie</h3><br>
+
 							<form method="POST" action="movie1.html" onsubmit="SubmitPOST(this);return false">
+								<input type="checkbox" name="callmodule">
 								<input name="data" type="text" rows="5">
 							<br><br><input type="submit"><br><br>
 							<table id="tbl" border="2">
@@ -994,6 +995,8 @@
 								</tbody>
 							</table>
 								<script>
+									checkBox = document.getElementById('callmodule');
+
 									function SubmitPOST(formElement){
 										var fd = new FormData(formElement);
 										CallHTTPHandler(formElement.action, fd);
@@ -1009,10 +1012,8 @@
 											xmlhttp.open("POST", handlerFile);
 											xmlhttp.send(formData);
 										}
-									}
-								</script>
-								<script>
 
+									}
 								</script>
 
 						</form>
@@ -1027,5 +1028,6 @@
 	<script type="text/javascript" src="js/submit.js"></script>
 	<script type="text/javascript" src="js/comments.js"></script>
 		<script>document.cookie = "username = HELLO";</script>
+		<!--<script>appendData11()</script>-->
 	</div></body>
 </html>

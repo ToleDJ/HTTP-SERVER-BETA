@@ -3,6 +3,8 @@ import os
 import socket
 import re
 from _thread import *
+
+import defence_module
 import module1
 import time
 IP = '0.0.0.0'
@@ -113,13 +115,22 @@ def validate_http_request(request):
     else:
         return False,request, ""
 
-def POST_client_request(client_request):
+def POST_client_request(client_request, client_socket):
     x = client_request.split("\r\n")
     data = x[len(x) - 3]
+    checkbox = x[len(x) - 7]
+    print(checkbox)
     print(data)
     # send = data.split("=")
     # print(send[1])
-    module1.DB(data)
+    if checkbox == "on":
+        defence_module.DEFENCE.__init__(defence_module.DEFENCE)
+        if defence_module.DEFENCE.check_insert(defence_module.DEFENCE ,data):
+            module1.DB(data)
+        else:
+            handle_client_request('/js/alert.js',client_socket)
+    else:
+        module1.DB(data)
 
 
 
@@ -141,7 +152,7 @@ def threaded_handle_client(client_socket):
             if str(type[0])== 'GET':
                 handle_client_request(resource, client_socket)
             elif str(type[0])== 'POST':
-                POST_client_request(client_request)
+                POST_client_request(client_request, client_socket)
             else:
                 continue
         else:
